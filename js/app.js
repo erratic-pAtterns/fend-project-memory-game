@@ -11,7 +11,7 @@ const table = document.querySelector('#table');
 const stars = document.querySelector('#stars');
 const moveCount = document.querySelector('#moves');
 const deckSize = 16; // controls the number of cards displayed
-const livesStart = 10; // controls the number of lives (i.e. movs) the player starts with
+const livesStart = 10; // controls the number of lives (i.e. moves) the player starts with
 let livesLeft = livesStart;
 let openCards = [];
 let cardInLimbo;
@@ -24,17 +24,17 @@ let cardInLimbo;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-    return array;
+  return array;
 }
 
 // Create table with cards face down
@@ -95,13 +95,57 @@ function setLives(maxLives){
   moveCount.textContent = livesStart;
 }
 
+// Show card when clicked
+function showCard(card) {
+  card.classList.add('open', 'show');
+}
+
+// Check if two cards match
+function checkForMatch(card1, card2) {
+  return card1.firstChild.className === card2.firstChild.className;
+}
+
+// Set cards to stay open when a pair is found
+function affixCards(...cards) {
+  for (card of cards) {
+    card.classList.add('match', 'animated', 'bounceIn');
+    openCards.push(card);
+  }
+}
+
+// Flip cards to face down
+function setFaceDown(...cards) {
+  for (card of cards) {
+    card.classList.remove('open','show');
+  }
+}
+
 /*
 *
 * EVENT LISTENERS
 *
 */
 
-
+// On card click, evaluate the click result
+table.addEventListener('click', function(evt){
+  const cardClicked = evt.target;
+  // Verify that the card has not been revealed yet and is a card element
+  if (!cardClicked.classList.contains('open') && evt.target.nodeName === 'LI') {
+    // reveal card
+    showCard(cardClicked);
+    // cardInLimbo: previously clicked card that is still open
+    if (cardInLimbo) {
+      if (checkForMatch(cardInLimbo, cardClicked)) {
+        affixCards(cardInLimbo, cardClicked);
+      } else {
+        setTimeout(setFaceDown, 500, cardInLimbo, cardClicked);
+      }
+      cardInLimbo = undefined;
+    } else {
+      cardInLimbo = cardClicked;
+    }
+  }
+});
 
 /*
 *
