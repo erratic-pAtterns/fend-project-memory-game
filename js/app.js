@@ -52,6 +52,49 @@ function createTable(size) {
   table.appendChild(fragment);
 }
 
+// Select the list of images for the cards
+function pickCardImgs(imglist) {
+  let imgCount = deckSize / 2;
+  let imgSelection = [];
+
+  while (imgCount > 0) {
+    const cardImage = imglist[Math.floor(Math.random() * imglist.length)];
+    if (imgSelection.includes(cardImage)) {
+      continue;
+    } else {
+      imgSelection.push(cardImage);
+      imgCount -= 1;
+    }
+  }
+  return imgSelection;
+}
+
+// Assign new images to cards
+function dealNewCards() {
+  const cardImgs = pickCardImgs(faIcons);
+  let deck = cardImgs.concat(cardImgs);
+
+  shuffle(deck);
+
+  for (let i = 0; i < deck.length; i++) {
+    const cardImg = deck[i];
+    table.children[i].firstChild.className = 'fa ' + cardImg;
+  }
+}
+
+// Set up of movecount and stars
+function setLives(maxLives){
+  let livesBlock = '';
+  let n = 1;
+
+  while (n <= maxLives) {
+    livesBlock += '<li><i class="fa fa-star"></i></li>';
+    n += 1;
+  }
+  stars.innerHTML = livesBlock;
+  moveCount.textContent = livesStart;
+}
+
 /*
 *
 * EVENT LISTENERS
@@ -67,3 +110,5 @@ function createTable(size) {
 */
 
 createTable(deckSize);
+setLives(livesStart);
+dealNewCards();
