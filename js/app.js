@@ -90,7 +90,7 @@ function setLives(maxLives){
   let n = 1;
 
   while (n <= maxLives) {
-    livesBlock += '<li><i class="fa fa-star"></i></li>';
+    livesBlock += '<li><i id="star' + n + '"' + ' class="fa fa-star"></i></li>';
     n += 1;
   }
   stars.innerHTML = livesBlock;
@@ -133,6 +133,48 @@ function isGameOver() {
   }
 }
 
+// Deduct a life point and remove a star from UI
+function removeLife() {
+  document.querySelector('#star' + livesLeft).classList.replace('fa-star', 'fa-star-o');
+  document.querySelector('#star' + livesLeft).parentElement.classList.add('animated','fadeOut');
+  livesLeft -=1;
+  moveCount.textContent = livesLeft;
+}
+
+// Reset lives (and stars on the UI)
+function resetLives() {
+  // loop set up to allow delayed display of stars -- not implemented yet.
+  for (star of stars.children) {
+    if (star.firstChild.classList.contains('fa-star-o')) {
+      star.firstChild.classList.replace('fa-star-o', 'fa-star');
+      star.classList.replace('fadeOut', 'fadeIn');
+      livesLeft = livesStart;
+      moveCount.textContent = livesLeft;
+    }
+  }
+}
+
+// Restart the game
+function restartGame() {
+  table.classList.add('animated', 'zoomOutUp');
+
+  setTimeout(function(){
+
+    for (card of table.children) {
+      card.className = 'card';
+    }
+    gameOver = false;
+    openCards = [];
+    cardInLimbo = undefined;
+    dealNewCards();
+    setTimeout(function(){
+      resetLives(livesStart);
+    },1300);
+    table.classList.replace('zoomOutUp', 'zoomInDown');
+  }, 1400);
+}
+
+// Display victory or lose message, along with gameplay stats
 function displayModal(gameResult) {
   //TODO
 }
@@ -162,6 +204,7 @@ table.addEventListener('click', function(evt){
       if (checkForMatch(cardInLimbo, cardClicked)) {
         affixCards(cardInLimbo, cardClicked);
       } else {
+        removeLife();
         setTimeout(setFaceDown, 500, cardInLimbo, cardClicked);
       }
       cardInLimbo = undefined;
@@ -170,6 +213,10 @@ table.addEventListener('click', function(evt){
       cardInLimbo = cardClicked;
     }
   }
+});
+
+document.querySelector('#restart').addEventListener('click', function(){
+  restartGame();
 });
 
 /*
