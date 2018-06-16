@@ -10,11 +10,13 @@ const faIcons = ["fa-500px", "fa-address-book", "fa-address-book-o", "fa-address
 const table = document.querySelector('#table');
 const stars = document.querySelector('#stars');
 const moveCount = document.querySelector('#moves');
+const restartButton = document.querySelector('#restart');
 const deckSize = 16; // controls the number of cards displayed
 const livesStart = 10; // controls the number of lives (i.e. moves) the player starts with
 let livesLeft = livesStart;
 let openCards = [];
 let cardInLimbo;
+let gameOver = false;
 
 /*
 *
@@ -120,6 +122,21 @@ function setFaceDown(...cards) {
   }
 }
 
+// Check if game should be ended
+function isGameOver() {
+  if (openCards.length === deckSize) {
+    gameOver = true;
+    displayModal('win');
+  } else if (livesLeft === 0) {
+    gameOver = true;
+    displayModal('lose');
+  }
+}
+
+function displayModal(gameResult) {
+  //TODO
+}
+
 /*
 *
 * EVENT LISTENERS
@@ -128,6 +145,13 @@ function setFaceDown(...cards) {
 
 // On card click, evaluate the click result
 table.addEventListener('click', function(evt){
+  // Check if the game is still going
+  if (gameOver) {
+    restartButton.classList.remove('animated', 'bounce', 'flip');
+    restartButton.offsetWidth; // reflow element to enable reanimation
+    restartButton.classList.add('animated', 'bounce', 'flip');
+    return;
+  };
   const cardClicked = evt.target;
   // Verify that the card has not been revealed yet and is a card element
   if (!cardClicked.classList.contains('open') && evt.target.nodeName === 'LI') {
@@ -141,6 +165,7 @@ table.addEventListener('click', function(evt){
         setTimeout(setFaceDown, 500, cardInLimbo, cardClicked);
       }
       cardInLimbo = undefined;
+      isGameOver();
     } else {
       cardInLimbo = cardClicked;
     }
