@@ -37,6 +37,21 @@ function shuffle(array) {
     return array;
 }
 
+// Create table with cards face down
+function createTable(size) {
+  const fragment = document.createDocumentFragment();
+
+  while (size > 0) {
+    const cardBody = document.createElement('li');
+    const imgHolder = document.createElement('i');
+    cardBody.className = 'card';
+    cardBody.appendChild(imgHolder);
+    fragment.appendChild(cardBody);
+    size -= 1;
+  }
+  table.appendChild(fragment);
+}
+
 /*
 *
 * EVENT LISTENERS
@@ -50,3 +65,5 @@ function shuffle(array) {
 * START
 *
 */
+
+createTable(deckSize);
