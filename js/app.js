@@ -169,15 +169,39 @@ function restartGame() {
     dealNewCards();
     setTimeout(function(){
       resetLives(livesStart);
-    },1300);
+    }, 1300);
     table.classList.replace('zoomOutUp', 'zoomInDown');
   }, 1400);
 }
 
 // Display victory or lose message, along with gameplay stats
 function displayModal(gameResult) {
-  //TODO
+  const modalDlg = document.querySelector('#modal-dialog');
+  const modalMsg = document.querySelector('#modal-message');
+  const cancelBtn = document.querySelector('#modal-cancel-btn');
+  const restartBtn = document.querySelector('#modal-restart-btn');
+
+  if (gameResult === 'win') {
+    modalMsg.textContent = 'Congratulations! You\'ve found all the pairs!'
+  } else {
+    modalMsg.textContent = '*sad trombone* You have no more moves left :('
+  }
+  // display the modal
+  modalDlg.style.display = "block";
+
+  restartBtn.addEventListener('click', function() {
+    modalDlg.style.display = "none";
+    setTimeout(restartGame, 500);
+  });
+
+  cancelBtn.addEventListener('click', function() {
+    modalDlg.style.display = "none";
+  });
 }
+
+// TODO: Stat display on modal (time elapsed + movecount + stars)
+// TODO: Timer dispaly on page
+// TODO: Timer
 
 /*
 *
