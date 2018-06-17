@@ -9,7 +9,7 @@ const faIcons = ["fa-500px", "fa-address-book", "fa-address-book-o", "fa-address
 
 const table = document.querySelector('#table');
 const stars = document.querySelector('#stars');
-const moveCount = document.querySelector('#moves');
+const movesLeft = document.querySelector('#moves');
 const restartButton = document.querySelector('#restart');
 const statsPanel = document.querySelector('#stats-panel');
 const deckSize = 16; // controls the number of cards displayed
@@ -18,6 +18,13 @@ let livesLeft = livesStart;
 let openCards = [];
 let cardInLimbo;
 let gameOver = false;
+
+// stat variables
+let moveCount = 0;
+let sec = 0;
+let min = 0;
+let time = ''; // string representation of elapsed time
+let timer; // global setTime() function
 
 /*
 *
@@ -85,7 +92,7 @@ function dealNewCards() {
   }
 }
 
-// Set up of movecount and stars
+// Set up of movesLeft and stars
 function setLives(maxLives){
   let livesBlock = '';
   let n = 1;
@@ -95,7 +102,7 @@ function setLives(maxLives){
     n += 1;
   }
   stars.innerHTML = livesBlock;
-  moveCount.textContent = livesStart;
+  movesLeft.textContent = livesStart;
 }
 
 // Show card when clicked
@@ -125,16 +132,96 @@ function setFaceDown(...cards) {
 
 // Check if game should be ended
 function isGameOver() {
+
+  let result;
+
   if (openCards.length === deckSize) {
     gameOver = true;
-    displayModal('win');
+    result = 'win';
   } else if (livesLeft === 0) {
     gameOver = true;
-    displayModal('lose');
+    result = 'lose';
   }
   if (gameOver === true) {
+    statMonitor('stop');
+    displayModal(result);
+  }
+}
+
+//statMonitor
+function statMonitor(ctrl) {
+
+  if (ctrl === 'start') {
+    statsPanel.classList.add('open');
+    stopWatch('start');
+
+  } else if (ctrl === 'stop'){
+    stopWatch('stop');
     statsPanel.classList.remove('open');
   }
+}
+
+// Reset the stat values to 0
+function resetStatsPanel() {
+  sec = 0;
+  min = 0;
+  updateClock();
+  moveCount = 0;
+  updateMoveCount();
+}
+
+// stopwatch
+function stopWatch(ctrl) {
+
+  if (ctrl === 'start') {
+    timer = setTimeout(tick, 1000);
+
+  } else if (ctrl === 'stop'){
+    clearTimeout(timer);
+
+  } else {
+    timer = setTimeout(tick, 1000);
+  }
+}
+
+// increment the seconds counter by 1
+function tick() {
+  sec++;
+
+  if (sec === 60) {
+    min++;
+    sec = 0;
+  }
+
+  updateClock();
+  stopWatch();
+}
+
+// update the clock on the stats panel
+function updateClock() {
+  const clockDisplay = document.querySelector('#clock');
+  let strMin = min.toString();
+  let strSec = sec.toString();
+
+  if (strMin.length < 2) {
+    strMin = "0" + strMin; 
+  }
+  if (strSec.length < 2) {
+    strSec = "0" + strSec;
+  }
+  time = strMin + ":" + strSec;
+  clockDisplay.textContent = time;
+}
+// update the move count field on the stats panel
+function updateMoveCount() {
+  const moveDisplay = document.querySelector('#move-count');
+  let strMvCnt = moveCount.toString();
+
+  if (strMvCnt.length < 2) {
+    strMvCnt = "0" + strMvCnt;
+  }
+
+  moveDisplay.textContent = strMvCnt;
 }
 
 // Deduct a life point and remove a star from UI
@@ -142,7 +229,7 @@ function removeLife() {
   document.querySelector('#star' + livesLeft).classList.replace('fa-star', 'fa-star-o');
   document.querySelector('#star' + livesLeft).parentElement.classList.add('animated','fadeOut');
   livesLeft -=1;
-  moveCount.textContent = livesLeft;
+  movesLeft.textContent = livesLeft;
 }
 
 // Reset lives (and stars on the UI)
@@ -153,7 +240,7 @@ function resetLives() {
       star.firstChild.classList.replace('fa-star-o', 'fa-star');
       star.classList.replace('fadeOut', 'fadeIn');
       livesLeft = livesStart;
-      moveCount.textContent = livesLeft;
+      movesLeft.textContent = livesLeft;
     }
   }
 }
@@ -161,6 +248,7 @@ function resetLives() {
 // Restart the game
 function restartGame() {
   table.classList.add('animated', 'zoomOutUp');
+  statMonitor('stop');
 
   setTimeout(function(){
 
@@ -171,6 +259,7 @@ function restartGame() {
     openCards = [];
     cardInLimbo = undefined;
     dealNewCards();
+    resetStatsPanel();
     setTimeout(function(){
       resetLives(livesStart);
     }, 1300);
@@ -203,7 +292,7 @@ function displayModal(gameResult) {
   });
 }
 
-// TODO: Stat display on modal (time elapsed + movecount + stars)
+// TODO: Stat display on modal (time elapsed + movesLeft + stars)
 // TODO: Timer dispaly on page
 // TODO: Timer
 
@@ -225,10 +314,13 @@ table.addEventListener('click', function(evt){
   const cardClicked = evt.target;
   // Verify that the card has not been revealed yet and is a card element
   if (!cardClicked.classList.contains('open') && evt.target.nodeName === 'LI') {
-    // start stopwatch
-    
-    // reveal stats panel
-    statsPanel.classList.add('open');
+
+    // check if this is the first click
+    if (!statsPanel.classList.contains('open')) {
+      // start stopwatch and move counter
+      statMonitor('start');
+    }
+
     // reveal card
     showCard(cardClicked);
     // cardInLimbo: previously clicked card that is still open
@@ -237,6 +329,8 @@ table.addEventListener('click', function(evt){
         affixCards(cardInLimbo, cardClicked);
       } else {
         removeLife();
+        moveCount ++;
+        updateMoveCount();
         setTimeout(setFaceDown, 500, cardInLimbo, cardClicked);
       }
       cardInLimbo = undefined;
