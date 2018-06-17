@@ -103,17 +103,69 @@ h1 {
   display: inline-block;
 }
 
+#score-panel {
+  text-align: left;
+  width: 345px;
+  margin-bottom: 10px;
+}
+
+#score-panel #stars {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px 0 0;
+}
+
+#score-panel #stars li {
+  list-style: none;
+  display: inline-block;
+}
+
 #score-panel #restart {
   float: right;
   cursor: pointer;
 }
 
 /*
+* Styles for Player Stats
+*/
+
+#stats-panel {
+  width: 250px;
+  height: 70px;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -70px);
+  transition: transform 0.7s ease;
+  background-color: #0000066f;
+  border: 1px solid #000;
+}
+
+#stats-panel.open {
+  transform: translate(0, 0);
+}
+
+#stats-panel #stats {
+  padding: 0;
+  text-align: center;
+}
+
+#stats-panel #stats li {
+  list-style: none;
+  display: inline-block;
+  padding: 5px;
+  margin: 0 15px 0 15px;
+  border: 1px solid #000;
+  background-color: #eee;
+}
+
+
+/*
 * Styles for the Modal Dialog
 */
 
 .modal {
-  display: none; /* Hidden by default */
   position: fixed;
   z-index: 1; /* Sit on top */
   padding-top: 10%;
@@ -124,6 +176,13 @@ h1 {
   overflow: auto; /* Enable scroll if needed */
   background-color: #000; /* Fallback color */
   background-color: #0000066f; /* w/ opacity */
+}
+
+.modal.hide {
+  display: none;
+}
+.modal.unhide {
+  display: block;
 }
 
 .modal-content {
@@ -151,7 +210,7 @@ h1 {
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
-  background: #02ccba;
+  background-color: #02ccba;
 }
 
 .button:hover,

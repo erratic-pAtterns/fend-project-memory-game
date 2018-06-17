@@ -11,6 +11,7 @@ const table = document.querySelector('#table');
 const stars = document.querySelector('#stars');
 const moveCount = document.querySelector('#moves');
 const restartButton = document.querySelector('#restart');
+const statsPanel = document.querySelector('#stats-panel');
 const deckSize = 16; // controls the number of cards displayed
 const livesStart = 10; // controls the number of lives (i.e. moves) the player starts with
 let livesLeft = livesStart;
@@ -131,6 +132,9 @@ function isGameOver() {
     gameOver = true;
     displayModal('lose');
   }
+  if (gameOver === true) {
+    statsPanel.classList.remove('open');
+  }
 }
 
 // Deduct a life point and remove a star from UI
@@ -187,15 +191,15 @@ function displayModal(gameResult) {
     modalMsg.textContent = '*sad trombone* You have no more moves left :('
   }
   // display the modal
-  modalDlg.style.display = "block";
+  modalDlg.classList.replace('hide', 'unhide');
 
   restartBtn.addEventListener('click', function() {
-    modalDlg.style.display = "none";
+    modalDlg.classList.replace('unhide', 'hide');
     setTimeout(restartGame, 500);
   });
 
   cancelBtn.addEventListener('click', function() {
-    modalDlg.style.display = "none";
+    modalDlg.classList.replace('unhide', 'hide');
   });
 }
 
@@ -221,6 +225,10 @@ table.addEventListener('click', function(evt){
   const cardClicked = evt.target;
   // Verify that the card has not been revealed yet and is a card element
   if (!cardClicked.classList.contains('open') && evt.target.nodeName === 'LI') {
+    // start stopwatch
+    
+    // reveal stats panel
+    statsPanel.classList.add('open');
     // reveal card
     showCard(cardClicked);
     // cardInLimbo: previously clicked card that is still open
