@@ -9,6 +9,7 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+
   </head>
   <body>
 
@@ -21,30 +22,35 @@
 
       <!-- Player Stats Panel -->
       <section id="stats-panel">
-        <ul id="stats">
-          <li><i class="fa fa-clock-o"></i> <span id=clock>00:00</span></li>
-          <li><i class="fa fa-hand-pointer-o"></i> <span id=move-count>00</span></li>
-        </ul>
+          <div class="stat-box">
+            <i class="fa fa-clock-o"></i> <span id=clock>00:00</span></div>
+          <div class="stat-box">
+            <i class="fa fa-hand-pointer-o"></i> <span id=move-count>00</span>
+          </div>
       </section>
 
-      <!-- Score Panel --->
-      <section id="score-panel">
-        <ul id="stars"></ul>
-        <span id="moves"></span> Moves left
+      <!-- Rating and Restart Panel --->
+      <section id="rr-panel">
+        <div id="rating"></div>
         <div id="restart">
           <i class="fa fa-repeat"></i>
         </div>
       </section>
-      
+
       <!-- Table and Cards -->
       <ul id="table"></ul>
-      
+
     </div>
-    
+
     <div id="modal-dialog" class="modal hide">
       <!-- Modal Content -->
       <div class="modal-content">
         <p id="modal-message"></p>
+        <div id="score-board">
+          <p id="star-res"></p>
+          <p id="time-res"></p>
+          <p id="move-res"></p>
+        </div>
         <div class="btn-wrapper">
           <div id="modal-restart-btn" class="button">Play again</div>
           <div id="modal-cancel-btn" class="button">I'd rather not...</div>
