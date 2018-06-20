@@ -22,7 +22,7 @@ body {
   font-family: 'Coda', cursive;
 }
 
-#container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@ h1 {
 * Styles for the table and cards
 */
 
-#table {
+.table {
   width: 660px;
   min-height: 680px;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
@@ -53,7 +53,7 @@ h1 {
   margin: 0 0 3em;
 }
 
-#table .card {
+.table .card {
   height: 125px;
   width: 125px;
   background: #2e3d49;
@@ -66,20 +66,20 @@ h1 {
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
-#table .card.open {
+.table .card.open {
   background: #02b3e4;
   cursor: default;
 }
 
-#table .card i {
+.table .card i {
   font-size: 0em;
 }
 
-#table .card.open i {
+.table .card.open i {
   font-size: 2.3em;
 }
 
-#table .card.match {
+.table .card.match {
   background: #02ccba;
 }
 
@@ -87,19 +87,19 @@ h1 {
 * Styles for the Score Panel (Rating stars + Restart button)
 */
 
-#rr-panel {
+.rr-panel {
   display: flex;
   width: 50%;
   margin-bottom: 10px;
 }
 
-#rr-panel #rating {
+.rr-panel .rating {
   width: 50%;
   text-align: center;
 
 }
 
-#rr-panel #restart {
+.rr-panel .restart {
   width: 50%;
   cursor: pointer;
   text-align: center;
@@ -109,7 +109,7 @@ h1 {
 * Styles for Player Stats
 */
 
-#stats-panel {
+.stats-panel {
   display: flex;
   width: 250px;
   height: 70px;
@@ -122,12 +122,12 @@ h1 {
   border: 1px solid #000;
 }
 
-#stats-panel.open {
+.stats-panel.open {
   position: fixed;
   transform: translate(0, 0);
 }
 
-#stats-panel .stat-box {
+.stats-panel .stat-box {
   display: flex;
   width: 50%;
   text-align: center;
@@ -137,14 +137,14 @@ h1 {
   background-color: #eee;
 }
 
-#stats-panel .stat-box i {
+.stats-panel .stat-box i {
   width: 40%;
   text-align: center;
   padding-top: 0.2em;
 
 }
 
-#stats-panel .stat-box span {
+.stats-panel .stat-box span {
   width: 60%;
   text-align: left;
 }
@@ -154,7 +154,7 @@ h1 {
 * Styles for the Modal Dialog
 */
 
-.modal {
+.modal-dialog {
   position: fixed;
   z-index: 1; /* Sit on top */
   padding-top: 10%;
@@ -167,10 +167,10 @@ h1 {
   background-color: #0000066f; /* w/ opacity */
 }
 
-.modal.hide {
+.modal-dialog.hide {
   display: none;
 }
-.modal.unhide {
+.modal-dialog.unhide {
   display: block;
 }
 
@@ -219,7 +219,7 @@ h1 {
 
 @media screen and (min-width: 751px) {
 
-  #container {
+  .container {
     width: 660px;
     margin-left: auto;
     margin-right: auto;
@@ -228,23 +228,23 @@ h1 {
 
 @media screen and (max-width: 750px) {
 
-  #container {
+  .container {
     width: 550px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  #rr-panel {
+  .rr-panel {
     width: 65%;
   }
 
-  #table {
+  .table {
     width: 95%;
     min-height: 95%;
     padding: 1.3em;
   }
 
-  #table .card {
+  .table .card {
     width: 22%;
     height: 7em;
     margin: 0.3em;
@@ -253,29 +253,29 @@ h1 {
 
 @media screen and (max-width: 550px) {
 
-  #container {
+  .container {
     width: 100%;
   }
 
-  #table {
+  .table {
     width: 95%;
     min-height: 95%;
     padding: 1em;
   }
 
-  #table .card {
+  .table .card {
     height: 5.7em;
   }
 }
 
 @media screen and (max-width: 430px) {
 
-  #table {
+  .table {
     width: 90%;
     padding: 0.5em;
   }
 
-  #table .card {
+  .table .card {
     width: 30%;
     height: 5.7em;
   }
@@ -294,23 +294,23 @@ h1 {
 
 @media screen and (max-width: 356px) {
 
-  #table {
+  .table {
     width: 95%;
   }
 
-  #table .card {
+  .table .card {
     height: 5em;
     margin: 0.2em;
   }
 
-  #table .card.open i{
+  .table .card.open i{
     font-size: 1.8em;
   }
 }
 
 @media screen and (max-width: 290px) {
 
-  #table .card {
+  .table .card {
     width: 30%;
     height: 4.2em;
     margin: 0.2em

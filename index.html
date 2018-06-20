@@ -13,7 +13,7 @@
   </head>
   <body>
 
-    <div id="container">
+    <div class="container">
 
       <!-- Game title -->
       <header>
@@ -21,39 +21,39 @@
       </header>
 
       <!-- Player Stats Panel -->
-      <section id="stats-panel">
+      <section class="stats-panel">
           <div class="stat-box">
-            <i class="fa fa-clock-o"></i> <span id=clock>00:00</span></div>
+            <i class="fa fa-clock-o"></i> <span class=clock>00:00</span></div>
           <div class="stat-box">
-            <i class="fa fa-hand-pointer-o"></i> <span id=move-count>00</span>
+            <i class="fa fa-hand-pointer-o"></i> <span class=move-count>00</span>
           </div>
       </section>
 
       <!-- Rating and Restart Panel --->
-      <section id="rr-panel">
-        <div id="rating"></div>
-        <div id="restart">
+      <section class="rr-panel">
+        <div class="rating"></div>
+        <div class="restart">
           <i class="fa fa-repeat"></i>
         </div>
       </section>
 
       <!-- Table and Cards -->
-      <ul id="table"></ul>
+      <ul class="table"></ul>
 
     </div>
 
-    <div id="modal-dialog" class="modal hide">
+    <div class="modal-dialog hide">
       <!-- Modal Content -->
       <div class="modal-content">
-        <p id="modal-message"></p>
-        <div id="score-board">
-          <p id="star-res"></p>
-          <p id="time-res"></p>
-          <p id="move-res"></p>
+        <p class="modal-message"></p>
+        <div class="score-board">
+          <p class="star-res"></p>
+          <p class="time-res"></p>
+          <p class="move-res"></p>
         </div>
         <div class="btn-wrapper">
-          <div id="modal-restart-btn" class="button">Play again</div>
-          <div id="modal-cancel-btn" class="button">I'd rather not...</div>
+          <div class="button modal-restart-btn">Play again</div>
+          <div class="button modal-cancel-btn">I'd rather not...</div>
         </div>
       </div>
     </div>
