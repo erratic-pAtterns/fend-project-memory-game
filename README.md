@@ -1,20 +1,22 @@
-# Memory Game Project
+# Udacity FEND Project
 
-## Table of Contents
+Memory Game
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## How To Play
 
-## Instructions
+The objective of the game is to find all the pairs. Select two cards to find a pair. Using fewer clicks to finish the game will earn you a higher rating.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+## Screenshots
 
-To get started, open `js/app.js` and start building out the app's functionality
+Desktop version:
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+![desktop version](https://github.com/erratic-pAtterns/fend-project-memory-game/blob/master/screenshots/mg-desktop.PNG)
 
-## Contributing
+Mobile version:
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+![mobile version](https://github.com/erratic-pAtterns/fend-project-memory-game/blob/master/screenshots/mg-mobile.PNG) 
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## External Resources Used
+
+* CSS Animations: [animate.css](https://daneden.github.io/animate.css/)
+* w3schools.com: [How TO - CSS/JS Modal](https://www.w3schools.com/howto/howto_css_modals.asp)
